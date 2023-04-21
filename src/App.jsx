@@ -4,6 +4,7 @@ import {Route, Routes} from 'react-router-dom'
 import Header from './components/MUI/Header'
 import LandingPage from './pages/LandingPage'
 import ExcelTool from './pages/ExcelTool'
+import RouterDemo from './pages/RouterDemo'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/excel" element={<ExcelTool />} />
+          <Route path="/router" element={<RouterDemo />} />
         </Routes>
       </div>
     </>
