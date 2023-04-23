@@ -74,7 +74,7 @@ export default function SearchAppBar() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            <Link to={'/'}>POCD</Link>
+            <Link to={'/'} style={{ textDecoration: 'none' }}>POCD</Link>
           </Typography>
           <Search>
             <SearchIconWrapper>

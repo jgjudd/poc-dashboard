@@ -12,10 +12,14 @@ const LandingPage = () => {
           </Link>
           <Link to={'/router'}>
             <button type='button' style={{ padding: '1rem', margin: '1rem' }}>
-              Router Demo
+              Nested Router Demo
             </button>
           </Link>
-          <button type='button' style={{ padding: '1rem', margin: '1rem' }}>Button C</button>
+          <Link to={'/text'}>
+            <button type='button' style={{ padding: '1rem', margin: '1rem' }}>
+              Text Tool
+            </button>
+          </Link>
       </div>
     </div>
   )
