@@ -3,7 +3,8 @@ import Header from './components/MUI/Header'
 import LandingPage from './pages/LandingPage'
 import ExcelTool from './pages/ExcelTool'
 import TextTool from './pages/TextTool'
-
+import MixinTool from './pages/MixinTool'
+import CalculatorTool from './pages/CalculatorTool'
 import { 
   Route, 
   RouterProvider, 
@@ -31,6 +32,8 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path='/router/admin' element={<div>Admin Content</div>} loader={()=>{return null}} />
     </Route>
     <Route path="/text" element={<TextTool />} />
+    <Route path="/mixin" element={<MixinTool />} />
+    <Route path="/calculator" element={<CalculatorTool />} />
   </Route>
 ))
 

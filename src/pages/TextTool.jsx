@@ -28,7 +28,7 @@ const TextTool = () => {
         word = word.replace('.', '')
         word = word.replace(',', '')
         // build object
-        wordObject[word] = wordObject[word] + 1 || 0
+        wordObject[word] = wordObject[word] + 1 || 1
       }
     }
 
@@ -39,6 +39,7 @@ const TextTool = () => {
 
   return (
     <>
+      <h1 style={{ textAlign: 'center' }}>Text Tool</h1>
       <div style={{ margin: '1rem' }}>
         <input 
           type='file' 
