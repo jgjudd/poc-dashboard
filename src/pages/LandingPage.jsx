@@ -44,6 +44,13 @@ const LandingPage = () => {
             </CardContent>
           </Card>
         </Link>
+        <Link to={'/chat'} style={{ textDecoration: 'none' }}>
+          <Card sx={cardStyles}>
+            <CardContent>
+              <Typography>Chat Tool</Typography>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
     </>
   )

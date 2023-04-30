@@ -5,6 +5,7 @@ import ExcelTool from './pages/ExcelTool'
 import TextTool from './pages/TextTool'
 import MixinTool from './pages/MixinTool'
 import CalculatorTool from './pages/CalculatorTool'
+import ChatTool from './pages/ChatTool'
 import { 
   Route, 
   RouterProvider, 
@@ -34,6 +35,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/text" element={<TextTool />} />
     <Route path="/mixin" element={<MixinTool />} />
     <Route path="/calculator" element={<CalculatorTool />} />
+    <Route path="/chat" element={<ChatTool />} />
   </Route>
 ))
 
