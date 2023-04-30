@@ -10,7 +10,10 @@ const MixinTool = () => {
     <>
       <h1 style={{ textAlign: 'center' }}>Mixin Tool</h1>
       <div>
-
+        <code>
+          let x = 5
+          console.log(x)
+        </code>
       </div>
     </>
   )
