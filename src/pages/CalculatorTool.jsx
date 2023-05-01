@@ -1,62 +1,78 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { useCalculator } from "../hooks/CalculatorHook";
 
 const CalculatorTool = () => {
-  const calculator = useCalculator();
-  const [operations, setOperations] = useState([])
-
-  const handleOperation = (operationSign, newValue) => {
-    console.log('operationSign:', operationSign, ', newValue:', newValue)
-    setOperations(previous => [ ...previous, [ operationSign, Number(newValue) ] ])
-  }
-
-  const operationsDictionary = {
-    '+': (final, value) => calculator.add(final, value),
-    '-': (final, value) => calculator.subtract(final, value),
-    '*': (final, value) => calculator.multiply(final, value),
-    '/': (final, value) => calculator.divide(final, value),
-    'sin': (value) => final = calculator.sin(value),
-    'cos': (value) => final = calculator.cos(value),
-    'tan': (value) => final = calculator.tan(value),
-    'log': (value) => final = calculator.log(value),
-  }
-
-  const calculateTotal = () => {
-    let newTotal = operations?.reduce((accumulator, current) => {
-      // gets the correct function from the operationsDictionary, by operation key
-      let mathOperation = operationsDictionary[current[0]]
-      // calls operation with each value
-      return mathOperation(accumulator, current[1])
-    }, 0)
-
-    setCalculatedTotal(newTotal)
-  }
-
+  const { add, subtract, multiply, divide, sin, cos, tan, log } = useCalculator();
+  // const [total, setTotal] = useState(0)
   const [displayValue, setDisplayValue] = useState(0)
-  const [calculatedTotal, setCalculatedTotal] = useState(0)
 
-  // useEffect to sync calculated value with display value
-  useEffect(() => {
-    setDisplayValue(calculatedTotal)
-  }, [calculatedTotal])
+  const initialValue = { total: 0, displayValue: '', operations: ['add', 0] }
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'display':
+        return { ...state, displayValue: action.payload }
+      case 'add':
+        return {
+          ...state,
+          displayValue: '', 
+          operations: [ ...state.operations, ['add', action.payload] ]  
+        }
+      case 'equals':
+        let newTotal = 0;
+
+        // if (state.displayValue !== '') { 
+        //   state.operations.push(['=', action.payload])
+        // }
+
+        state.operations.map(current => {
+          switch (current[0]) {
+            case 'add':
+              return add(newTotal, current[1])
+            case 'subtract':
+              return subtract(newTotal, current[1])
+            case 'multiply':
+              return multiply(newTotal, current[1])
+            case 'divide':
+              return divide(newTotal, current[1])
+            default:
+              return newTotal
+          }
+        })
+        return { ...state, total: newTotal, displayValue: newTotal, operations: [['add', 0]] }
+      default:
+        return value
+    }
+  }
+
+  // useEffect(() => {
+  //   setDisplayValue(displayValue)
+  // }, [total])
+
+  const [state, dispatch] = useReducer(reducer, initialValue)
+
+  // useEffect(() => {
+  //   dispatch({ type: 'display', payload: state.total })
+  // }, [state.total])
 
   return ( 
     <>
       <h1 style={{ textAlign: 'center' }}>Calculator Tool</h1>
       <div id='calculator-wrapper' style={wrapper}>
-        <input type='text' value={displayValue} style={inputField} onChange={e => setDisplayValue(e.target.value)} />
+        <input type='text' value={state.displayValue} style={inputField} onChange={e => dispatch({ type: 'display', payload: e.target.value })} />
+        <>{ 'Display: ' + state.displayValue }</>
+        <>{ 'Total: ' + state.total }</>
         <div id='calculator-container' style={calculatorStyles}>
-          <button onClick={() => handleOperation('+', displayValue)}>Add</button>
-          <button onClick={() => handleOperation('-', displayValue)}>Subtract</button>
-          <button onClick={() => handleOperation('*', displayValue)}>Multiply</button>
-          <button onClick={() => handleOperation('/', displayValue)}>Divide</button>
+          <button onClick={() => dispatch({ type: 'add', payload: Number(state.displayValue) })}>Add</button>
+          <button onClick={() => handleOperation('subtract', displayValue)}>Subtract</button>
+          <button onClick={() => handleOperation('multiply', displayValue)}>Multiply</button>
+          <button onClick={() => handleOperation('divide', displayValue)}>Divide</button>
           <button onClick={() => handleOperation('sin', displayValue)}>sin</button>
           <button onClick={() => handleOperation('cos', displayValue)}>cos</button>
           <button onClick={() => handleOperation('tan', displayValue)}>tan</button>
           <button onClick={() => handleOperation('log', displayValue)}>log</button>
           <button onClick={() => handleOperation('sqrd', displayValue)}>Squared</button>
           <button onClick={() => handleOperation('sqrt', displayValue)}>Square Root</button>
-          <button onClick={calculateTotal}>Equals</button>
+          <button onClick={() => dispatch({ type: 'equals' })}>Equals</button>
           <button onClick={() => handleOperation('clear', displayValue)}>Clear</button>
           <button onClick={() => handleOperation('allClear', displayValue)}>All Clear</button>
         </div>

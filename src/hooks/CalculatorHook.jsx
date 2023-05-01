@@ -1,8 +1,5 @@
 
 
-
-
-
 class Calculator {
   get [Symbol.toStringTag]() {
     return 'Calculator';
